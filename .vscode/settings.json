@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.sct": "ini",
+        "mtknob.h": "c"
+    }
+}
