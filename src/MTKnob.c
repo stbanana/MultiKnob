@@ -54,7 +54,7 @@ static void MTKnobEngine(MT_KONB *MTKB, uint8_t cycle);
  * @param GetB 获取B相态的函数
  * @param Callback 事件回调函数
  */
-void MTKnobInit(MT_KONB *MTKB, MTKB_GET GetA, MTKB_GET GetB, MTKB_CALLBACK Callback)
+uint32_t MTKnobInit(MT_KONB *MTKB, MTKB_GET GetA, MTKB_GET GetB, MTKB_CALLBACK Callback)
 {
     /* 检查传参 */
     if(MTKB == NULL || GetA == NULL || GetB == NULL || Callback == NULL)
@@ -68,11 +68,12 @@ void MTKnobInit(MT_KONB *MTKB, MTKB_GET GetA, MTKB_GET GetB, MTKB_CALLBACK Callb
     }
 
     if(isFound == 0) // 并未存在链表中，进行memset内存初始化；
-        memset(MTKB, 0, sizeof(MTKBChainRoot));
+        memset(MTKB, 0, sizeof(MT_KONB));
 
     MTKB->GetA     = GetA;
     MTKB->GetB     = GetB;
     MTKB->Callback = Callback;
+    return MTKB_API_RETURN_DEFAULT;
 }
 
 /**

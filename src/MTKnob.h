@@ -19,6 +19,7 @@ extern "C"
 
 /* Includes ------------------------------------------------------------------*/
 #include <stdint.h>
+#include <string.h>
 /* Exported constants --------------------------------------------------------*/
 /* Exported macros -----------------------------------------------------------*/
 
@@ -51,9 +52,6 @@ extern "C"
 /* 获取相态的函数类型 */
 typedef uint8_t (*MTKB_GET)(void);
 
-/* 处理事件的函数类型 */
-typedef uint32_t (*MTKB_CALLBACK)(MT_KONB *MTKB);
-
 /**
  * @brief 旋钮对象结构体
  */
@@ -70,18 +68,20 @@ typedef struct MT_KONB
     uint8_t  reg  :6; // 备用
 
     /* 需绑定的port */
-    MTKB_GET      GetA;     // 绑定的获取A相态函数
-    MTKB_GET      GetB;     // 绑定的获取B相态函数
-    MTKB_CALLBACK Callback; // 绑定的处理旋钮事件函数
+    MTKB_GET GetA;                              // 绑定的获取A相态函数
+    MTKB_GET GetB;                              // 绑定的获取B相态函数
+    uint32_t (*Callback)(struct MT_KONB *MTKB); // 绑定的处理旋钮事件函数
 
     /* 链表支持 */
     struct MT_KONB *next;
 } MT_KONB;
 
+/* 处理事件的函数类型 */
+typedef uint32_t (*MTKB_CALLBACK)(MT_KONB *MTKB);
 /* Exported variables ---------------------------------------------------------*/
 /* Exported functions ---------------------------------------------------------*/
 
-extern void     MTKnobInit(MT_KONB *MTKB, MTKB_GET GetA, MTKB_GET GetB, MTKB_CALLBACK Callback);
+extern uint32_t MTKnobInit(MT_KONB *MTKB, MTKB_GET GetA, MTKB_GET GetB, MTKB_CALLBACK Callback);
 extern uint32_t MTKnobStart(MT_KONB *MTKB);
 extern uint32_t MTKnobStop(MT_KONB *MTKB);
 extern uint16_t MTKnobEventGet(MT_KONB *MTKB);

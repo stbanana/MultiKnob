@@ -84,4 +84,5 @@ uint32_t Knob1EventCallback(MT_KONB *MTKB)
         SEGGER_RTT_Write(0, "异常事件 可能存在RAM溢出", sizeof("异常事件 可能存在RAM溢出"));
         break;
     }
+    return MTKB_API_RETURN_DEFAULT;
 }
